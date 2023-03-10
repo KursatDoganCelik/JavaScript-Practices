@@ -115,3 +115,12 @@ sayilariTopla = (...parameters) => {
 } //parametre sayısı önemsiz şekilde function açabiliyorsun..
 sayilariTopla(2, 3, 4); sayilariTopla(2, 3, 4, 5, 6)
 
+//array destructring
+let name3 = ["Kürşat", "Oğuz", "MehmetCan", "Ela", "Simge", "Vildan"]
+
+let [first="default", second, ...others] = name3 //spread operator and default usage
+console.log(first, second, others)
+
+let [firstt, , , , ,last] = name3 //middle part is gone because -> , ,
+console.log(firstt, last)
+
