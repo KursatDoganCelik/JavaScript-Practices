@@ -51,7 +51,7 @@ function f(){
   var number = 2
   console.log(number)
 }
-f()
+f();
 //JS use function scope but 'let' and 'const' is a block scope
 function g(){
   let numberr = 1
@@ -77,5 +77,91 @@ function g(){
 
   //!object = {name: "Şahin"} -> illegal because we change 'object'
 }
-g()
+g();
+
+//IIFE -> Immediately-invoked Function Expressions -> (...)()
+(function(){
+  let name = "Nida"
+  let age = 20
+  console.log(`I'm ${name} and my age ${age}.`)
+})()
+
+//Implicit Binding
+const person = {
+  name: "Nida",
+  age: 20,
+
+  sayName: function(){
+    console.log(this)
+    console.log(this.name)
+  },
+  sayAge(){
+    console.log(this)
+    console.log(this.age)
+  },
+  lastName: {
+    surname: "Akalp",
+    saySurname(){
+      console.log(this)
+      console.log(this.surname)
+    }
+  }
+}
+//It looks like the 'this' showing the value to the left of the dot
+person.sayName()  // 'this' gives a 'person'
+let say = person.sayName 
+say()  // 'this' gives a 'window' and no value
+
+person.sayAge()  // 'this' gives a 'person'
+say = person.sayAge
+say()  // 'this' gives a 'window' and value is undefined
+
+person.lastName.saySurname()  // 'this' gives a 'lastName'
+say = person.lastName.saySurname
+say()  // 'this' gives a 'window' and value is undefined
+
+
+//Explicit Binding -> call, apply, bind
+const student1 = {
+  name: "Yağız"
+}
+const student2 = {
+  name: "Kürşat"
+}
+
+const showInfos = function(surname){  //we can use '...' with apply
+  console.log(this)
+  console.log(`I am ${this.name} ${surname}.`)
+}
+
+showInfos.call(student1, "Avşar")
+showInfos.apply(student2, ["Çelik"]) //sends array as parameter
+
+let show = showInfos.bind(student2, "Doğan Çelik")
+show()  //we can sends '[ ]' if we want
+
+
+//usage of 'this' with arrow function in callback
+const school = {
+  names: ["Mehmet", "Miraç"],
+  numbers: [3, 7],
+
+  printNames(){
+    console.log(this)  //'this' gives a 'school'
+    const that = this
+    this.names.forEach(function(name, index){
+      console.log(this)  //'this' gives a window
+      console.log(`${that.numbers[index]}: ${name}`)
+    })
+  },
+  //or we can use arrow function ^-^
+  printNamess(){
+    this.names.forEach((name, index)=>{
+      console.log(this)  //'this' gives a 'school'
+      console.log(`${this.numbers[index]}: ${name}`)
+    })
+  }
+}
+school.printNames()  //old solituon
+school.printNamess()  //new solution
 
